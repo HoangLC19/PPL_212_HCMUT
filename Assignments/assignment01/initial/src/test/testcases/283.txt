@@ -1,0 +1,2 @@
+Class A{x(){}}
+        Class B: A{print(){io.writeInt(4+5);}}

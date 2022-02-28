@@ -1,0 +1,7 @@
+Class A{
+        main(){
+        Foreach (i In 1 .. 100) {
+        io.writeInt(i);
+            Break;
+        }
+        }}

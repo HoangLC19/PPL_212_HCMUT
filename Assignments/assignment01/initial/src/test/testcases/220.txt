@@ -1,0 +1,17 @@
+
+                    Class Program {
+        main() {
+            Val x : Int;
+            x = New foo();
+            Shape::$getNumOfShape();
+            x = foo.y;
+            Foreach(a[x] In 1 .. 10) {
+                If ((a[x] >= 9) || (a + 4 >= 0)) {
+                    x = x + 1;
+                    If (a[x] <= 0) {
+                        Out.printInt(x);
+                    }
+                }
+            }
+        }
+    }

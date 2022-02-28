@@ -1,0 +1,5 @@
+Class A{
+        main(){
+        Var x: Boolean = False;
+        If (x) {io.writeInt(100);}
+        }}

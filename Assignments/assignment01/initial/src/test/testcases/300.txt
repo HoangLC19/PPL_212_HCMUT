@@ -1,0 +1,7 @@
+Class A{
+        main(){
+        Val x,y: Int;
+        io.readInt(x);
+        io.readInt(y);
+        io.writeInt(x+y);
+        }}

@@ -1,0 +1,6 @@
+Class A{
+        main(){
+        Val _x: Boolean = True;
+        If (x) {If (y) {x=False;}}
+        Else {x=True;}
+        }}

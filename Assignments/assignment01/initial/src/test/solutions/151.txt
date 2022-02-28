@@ -1,0 +1,1 @@
+_PPL,$ppl,PPL,123,1234567,Unclosed String: adidas

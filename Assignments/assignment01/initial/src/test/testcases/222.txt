@@ -1,0 +1,4 @@
+
+            Class Program ({
+    Val x : Int = 00;
+}

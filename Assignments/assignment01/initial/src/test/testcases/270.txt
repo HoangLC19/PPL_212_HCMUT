@@ -1,0 +1,4 @@
+Class Lit{
+        main(){
+        Val A: String;
+        A= "a\tb\f\b%33\r\'hello";}}

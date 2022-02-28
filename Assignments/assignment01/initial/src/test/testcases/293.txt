@@ -1,0 +1,6 @@
+Class School{
+        Val id: Int;
+        print(){
+        Val a: Int =100;
+        io.writeInt(a);}
+        }

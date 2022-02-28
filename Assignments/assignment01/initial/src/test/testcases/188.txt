@@ -1,0 +1,1 @@
+If i % 2 == 0 ##biendem## { write(i); dem:=dem+1;}.If dem = 15 { dem:=0;writeLn(dem);

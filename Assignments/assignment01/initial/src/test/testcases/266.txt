@@ -1,0 +1,4 @@
+Class Lit{
+        main(){
+        Val A: String;
+        A ="my name";}}

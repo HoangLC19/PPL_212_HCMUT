@@ -1,0 +1,6 @@
+Class School{
+        Val _id: Int;
+        print(){
+        io.writeInt(this.id);
+        Var a: Float;}
+        }

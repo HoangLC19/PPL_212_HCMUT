@@ -1,0 +1,2 @@
+Class A{x(){}}
+        Class B: A{main(){this.x();}}

@@ -1,0 +1,8 @@
+Class A{
+        main(){
+        Val x,y: Int;
+        io.readInt(x);
+        io.readInt(y);
+        ## this is a line cmt
+        /* and an unterminated cmt##
+        }}

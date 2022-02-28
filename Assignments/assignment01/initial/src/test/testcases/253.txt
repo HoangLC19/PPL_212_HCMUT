@@ -1,0 +1,5 @@
+Class A{
+        main(){
+        Val x: Boolean = False;
+        If (x) {x = Array(3, 4, 5);}
+        }}

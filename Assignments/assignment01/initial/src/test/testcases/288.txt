@@ -1,0 +1,2 @@
+Class School{Val id: Float;}
+        Class Faculty { Var id: Int;}

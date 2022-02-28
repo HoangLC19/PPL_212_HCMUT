@@ -1,0 +1,6 @@
+Class A{
+        main(){
+        Var x: String;
+        If (x != "Hello") {io.readBool(x);}
+        Else {io.writeBool(x);}
+        }}

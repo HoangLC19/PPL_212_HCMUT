@@ -1,0 +1,7 @@
+Class A{
+        main(){
+        Val _x: Boolean = True;
+        If (x) { If(this.m==7) {x=True;}
+        Else {io.writeInt(100);}}
+        Else {io.writeInt(1);}
+        }}

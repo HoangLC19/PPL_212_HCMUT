@@ -1,0 +1,7 @@
+Class Program {
+    Var x: String = "sdfsdfdsfsdf";
+    main(a: Array[String, 5]) {
+        a[4] = a[4] +. ("hello" ==. "HELLO") * 2%3;
+        Var _ : Int = 023 + a[2]/(5*6);
+    }
+}

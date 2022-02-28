@@ -1,0 +1,4 @@
+Class School{
+        Val id: Float;
+        print(){io.writeInt(this.id);}}
+        Class Faculty{Var id: String;}

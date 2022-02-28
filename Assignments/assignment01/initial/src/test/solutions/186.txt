@@ -1,0 +1,1 @@
+If,root,==,NULL,{,root,=,newPtr,;,taller,=,true,;,return,root,;,},<EOF>

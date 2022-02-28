@@ -1,0 +1,2 @@
+Class A{Val b: Int;}
+        Class B: A{ Var d:Int;

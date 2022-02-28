@@ -1,0 +1,4 @@
+Class Lit{
+        main(){
+        Val A: Array[String, 2];
+        A=Array("\t\b\f", "LAST!!! ^_^ \'_\' ~_~ @_@ =.= !_!");}}

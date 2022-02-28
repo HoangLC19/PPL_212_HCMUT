@@ -1,0 +1,7 @@
+Class A{
+        main(){
+        Val x,sum: Int;
+        sum=0;
+        io.readInt(x);
+        Foreach (i In 1 .. x) {sum=sum+i;}
+        }}

@@ -1,0 +1,6 @@
+Class A{
+        main(){
+        Val m: Float;
+        m =  x.m(b[2]);
+        Shape::$main();
+        }}

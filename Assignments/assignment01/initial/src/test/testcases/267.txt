@@ -1,0 +1,4 @@
+Class Lit{
+        main(){
+        Var A: String;
+        A="This is a string containing tab \t";}}

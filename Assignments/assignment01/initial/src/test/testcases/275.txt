@@ -1,0 +1,4 @@
+Class Lit{
+        main(){
+        Val A: Array[Int, 2] = Array(1.2, 6);
+        }}

@@ -1,0 +1,11 @@
+Class Student {
+    main() {
+        Val i: Int = 0;
+
+        Foreach (b[d][c] In 1 .. 100 By i*3) {
+            Out.printString(a[c + d]);
+
+
+        }
+    }
+}

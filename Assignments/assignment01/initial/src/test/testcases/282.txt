@@ -1,0 +1,2 @@
+Class A{x(){}}
+        Class B: A{x(){io.writeInt(a[1][2]);}}

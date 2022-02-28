@@ -1,0 +1,8 @@
+Class Shape {
+Val length,width: Float;
+getArea() {}
+Shape(length,width: Float){
+this.length = length;
+this.width = width;
+}
+}

@@ -1,0 +1,7 @@
+Class A{
+        main(){
+        Val _x: Boolean = True;
+        If (x) {
+        If (x) {If (m==6) {m=1000;}}
+        }
+        }}

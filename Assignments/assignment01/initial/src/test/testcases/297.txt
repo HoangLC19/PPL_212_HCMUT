@@ -1,0 +1,4 @@
+Class A{
+        main(){
+        io.writeInt(io.readInt(x)+io.readInt(x)+io.readInt(x));
+        }}

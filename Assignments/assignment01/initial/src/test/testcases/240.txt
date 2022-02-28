@@ -1,0 +1,7 @@
+Class A{
+        main(){
+            Foreach(i In a.k[3] .. 100) {
+                If (i%2==0) {i = i*2;}
+            }
+        }
+}

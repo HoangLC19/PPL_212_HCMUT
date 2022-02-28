@@ -1,0 +1,15 @@
+Class X{
+        main(){
+  Val arr, n, i: Array[String, 100];
+  io.writeString( "Enter number of elements: ");
+  io.readInt(n);
+  Foreach (i In 0 ..  n) {
+    io.readInt(arr[i]);}
+  Foreach (i In 0 .. n) {
+    Foreach (j In i+1 .. n) {
+      If (arr[i] == arr[j]){
+        io.writeString("First repeating integer is ");
+         io.writeInt(arr[i]);
+      }}
+      }
+}}

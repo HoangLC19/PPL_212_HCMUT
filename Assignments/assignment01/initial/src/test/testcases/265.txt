@@ -1,7 +1,7 @@
 Class Shape {
 Var $numOfShape: Int = 0;
 Val $immuAttribute: Int = 0;
-Val length,width: Float;
+Val length,width: Float = 1.3e10;
 $getNumOfShape() {
 Return numOfShape;
 }

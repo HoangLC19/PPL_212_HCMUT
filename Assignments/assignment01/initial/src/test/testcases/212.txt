@@ -6,6 +6,6 @@
                     Val a : Array[Int, 5] = Array(1, 2, 3, 4, 5);
                     Var _dfjkld: String = "fdskjfsd";
                     Val b: Array[String, 4] = Array("a", "b", "c", "d");
-                    Var c: Array[Array, 4] = Array(Array(1, 2) , Array("dsfhk"));
+                    Var c: Array[Array[String, 4], 4] = Array(Array(1, 2) , Array("dsfhk"));
                 }
             }

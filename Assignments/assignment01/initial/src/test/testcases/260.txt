@@ -1,5 +1,5 @@
 Class Shape {
-Val length,width: Float;
+Val length,width: Float = 1.232, 1E20.34;
 getArea() {}
 Shape(length,width: Float){
 this.length = length;

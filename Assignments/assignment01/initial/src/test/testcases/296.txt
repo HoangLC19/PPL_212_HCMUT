@@ -1,6 +1,6 @@
 Class X{
         main(){
-  Val arr, n, i: Array[String, 100];
+  Val arr, n, i: Array[String, 100] = Array(23231, "dsfsd");
   io.writeString( "Enter number of elements: ");
   io.readInt(n);
   Foreach (i In 0 ..  n) {

@@ -26,7 +26,7 @@
 
         Class Program {
             main() {
-                Val x : Int;
+                Val x : Int = 1232;
                 x = New foo();
                 Shape::$getNumOfShape();
                 x = foo.y;

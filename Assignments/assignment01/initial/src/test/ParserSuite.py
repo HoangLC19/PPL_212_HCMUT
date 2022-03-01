@@ -154,7 +154,7 @@ class ParserSuite(unittest.TestCase):
                     Val a : Array[Int, 5] = Array(1, 2, 3, 4, 5);
                     Var _dfjkld: String = "fdskjfsd";
                     Val b: Array[String, 4] = Array("a", "b", "c", "d");
-                    Var c: Array[Array, 4] = Array(Array(1, 2) , Array("dsfhk"));
+                    Var c: Array[Array[String, 4], 4] = Array(Array(1, 2) , Array("dsfhk"));
                 }
             }"""
         expect = "successful"
@@ -163,13 +163,13 @@ class ParserSuite(unittest.TestCase):
     def test_simple_program13(self):
         input = """
             Class Program {
-                Val $x : Int;
+                Val $x : Int = 3248923;
                 main() {
                     Val My1stCons, My2ndCons: Int = 1 + 5, 2;
                     Var x, y : Int = 1e-3.54, 0x1AD;
                     Val a : Array[Int, 5] = Array(1, 2, 3, 4, 5);
                     Var _dfjkld: String = "This is a string containing tab \\t";
-                    Var c: Array[Array, 4] = Array(Array(1, 2) , Array("dsfhk"));
+                    Var c: Array[Array[Int, 3], 4] = Array(Array(1, 2) , Array("dsfhk"));
                     $x = a + b;
                     $x = New Program();
                     $x = a[6+4][b[3]];
@@ -312,7 +312,7 @@ class ParserSuite(unittest.TestCase):
 
         Class Program {
             main() {
-                Val x : Int;
+                Val x : Int = 1232;
                 x = New foo();
                 Shape::$getNumOfShape();
                 x = foo.y;
@@ -350,7 +350,7 @@ class ParserSuite(unittest.TestCase):
 
         Class Program {
             main() {
-                Val x : Int;
+                Val x : Int = 1914;
                 x = New foo();
                 Shape::$getNumOfShape();
                 x = foo.y;
@@ -360,14 +360,14 @@ class ParserSuite(unittest.TestCase):
         self.assertTrue(TestParser.test(input, expect, 219))
 
     def test_simple_program20(self):
-            input = """
+        input = """
                     Class Program {
         main() {
-            Val x : Int;
+            Val x : Int = 2323242;
             x = New foo();
             Shape::$getNumOfShape();
             x = foo.y;
-            Foreach(a[x] In 1 .. 10) {
+            Foreach(a In 1 .. 10) {
                 If ((a[x] >= 9) || (a + 4 >= 0)) {
                     x = x + 1;
                     If (a[x] <= 0) {
@@ -377,8 +377,8 @@ class ParserSuite(unittest.TestCase):
             }
         }
     }"""
-            expect = "successful"
-            self.assertTrue(TestParser.test(input, expect, 220))
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 220))
 
     def test_simple_program21(self):
         input = """
@@ -417,7 +417,7 @@ class ParserSuite(unittest.TestCase):
         input = """
                Class Program {
     Val x : Int = 00;
-    Constructor ($y, b: Int) {
+    Constructor (y, b: Int) {
         Var c = 8;;
     }
 }"""
@@ -428,7 +428,7 @@ class ParserSuite(unittest.TestCase):
         input = """
                    Class Program {
     Val x : Int = 00;
-    Constructor ($y, b: Int) {
+    Constructor (y, b: Int) {
         Var c: Int = 8;
     }
 
@@ -464,7 +464,6 @@ Out.printInt(Shape::$numOfShape); } }
 }"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 226))
-
 
     def test_exp2(self):
         input = """Class Program {
@@ -622,7 +621,7 @@ Class Program {
     main() {
         Val i: Int = 0;
 
-        Foreach (b[d][c] In 1 .. 100 By i*3) {
+        Foreach (b In 1 .. 100 By i*3) {
             Out.printString(a[c + d]);
 
 
@@ -692,12 +691,11 @@ Class Program {
         expect = "Error on line 4 col 17: 123"
         self.assertTrue(TestParser.test(input, expect, 243))
 
-
     def test_loop9(self):
         input = """Class A{
         m(){}
         main(){
-        Val x: Int;
+        Val x: Int = 123213_2321;
         Foreach (i In 1 .. 100) {
             x.m();
             Continue;
@@ -813,12 +811,10 @@ Class Program {
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 255))
 
-
-
     def test_stmt1(self):
         input = """Class A{
         ##this is a cmt##
-        Val $a: Int;
+        Val $a: Int = 1234;
         main() {
             $a = 4+5;
         }
@@ -853,7 +849,7 @@ Class Program {
 
     def test_stmt5(self):
         input = """Class Shape {
-Val length,width: Float;
+Val length,width: Float = 1.232, 1E20.34;
 getArea() {}
 Shape(length,width: Float){
 this.length = length;
@@ -900,7 +896,7 @@ factorial(n: Int){
 If (n == 0) {Return 1;} Else {Return n * this.factorial(n - 1);}
 }
 main(){
-Val x: Int;
+Val x: Int = 3434;
 x = io.readInt();
 io.writeIntLn(this.factorial(x));
 }
@@ -910,7 +906,7 @@ io.writeIntLn(this.factorial(x));
 
     def test_stmt8(self):
         input = """Class X{
-        Val x: Array[Int, 5];
+        Val x: Array[Int, 5] = Array(1, 2132, 2_343, 343, 565);
         X(){
         Foreach (i In 1 .. 100) {
 io.writeIntLn(i);
@@ -928,7 +924,7 @@ io.writeIntLn(x);}
 
 ##start of declaration part##
 Var r,s: Float;
-Val a,b: Array[Int, 5];
+Val a,b: Array[Int, 5] = Array(1, 2132, 2_343, 343);
 ##list of statements##
 r=2.0;
 s=r*r*this.myPI;
@@ -942,7 +938,7 @@ a[0]= s;
         input = """Class Shape {
 Var $numOfShape: Int = 0;
 Val $immuAttribute: Int = 0;
-Val length,width: Float;
+Val length,width: Float = 1.3e10;
 $getNumOfShape() {
 Return numOfShape;
 }
@@ -998,7 +994,7 @@ Return this.length*this.width;
     def test_literal6(self):
         input = """Class Lit{
         main(){
-        Val A: Array[String, 1];
+        Val A: Array[String, 1] = Array("adsklf");
         A=Array("\\t\\b\\f");}}"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 271))
@@ -1006,7 +1002,7 @@ Return this.length*this.width;
     def test_literal7(self):
         input = """Class Lit{
         main(){
-        Val A: Array[String, 2];
+        Val A: Array[String, 2] = Array("adf", "sfd");
         A=Array("\\t\\b\\f", "LAST!!! ^_^ \\'_\\' ~_~ @_@ =.= !_!");}}"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 272))
@@ -1014,7 +1010,7 @@ Return this.length*this.width;
     def test_literal8(self):
         input = """Class Lit{
         main(){
-        Val A: Array[String, 2];
+        Val A: Array[String, 2] = Array("adf", "sfd");
         A=Array("\\t\\b\\f", "LAST!!! ^_^ \\'_\\' ~_~ @_@ =.= !_!", 1.e33, "T\\rV");}}"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 273))
@@ -1022,7 +1018,7 @@ Return this.length*this.width;
     def test_literal9(self):
         input = """Class Lit{
         main(){
-        Val A: Array[String, 1];
+        Val A: Array[String, 1] = Array("dsfds");
         A=Array("abc\\ta\\nbc");}}"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 274))
@@ -1038,30 +1034,30 @@ Return this.length*this.width;
     def test_subclass1(self):
 
         input = """Class A{Var b: Int;}
-        Class B: A{ Val d: Int;}"""
+        Class B: A{ Val d: Int = 324234;}"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 276))
 
     def test_subclass2(self):
 
-        input = """Class A{Val b: Int;}
+        input = """Class A{Val b: Int = 560_343;}
         Class B: A{ Var d:Int;"""
         expect = "Error on line 2 col 30: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 277))
 
     def test_subclass3(self):
 
-        input = """Class A{Val x: Float;}
-        Class B{Val c: String;}
+        input = """Class A{Val x: Float = 1.2;}
+        Class B{Val c: String = "HLC";}
         Class C: A,B{ Val d: Int;}"""
         expect = "Error on line 3 col 18: ,"
         self.assertTrue(TestParser.test(input, expect, 278))
 
     def test_subclass4(self):
 
-        input = """Class A{Val x: Float;}
-        Class B: A{Val c: String;}
-        Class C: B{ Val d: Int;}"""
+        input = """Class A{Val x: Float = 1.2;}
+        Class B: A{Val c: String = "HLC";}
+        Class C: B{ Val d: Int = 4;}"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 279))
 
@@ -1183,7 +1179,7 @@ Return this.length*this.width;
     def test_mixed1(self):
         input = """Class X{
         main(){
-  Val arr, n, i: Array[String, 100];
+  Val arr, n, i: Array[String, 100] = Array(23231, "dsfsd");
   io.writeString( "Enter number of elements: ");
   io.readInt(n);
   Foreach (i In 0 ..  n) {
@@ -1210,7 +1206,7 @@ Return this.length*this.width;
     def test_mixed3(self):
         input = """Class A{
         main(){
-        Val x,sum: Int;
+        Val x,sum: Int = 32132, 1232_3432;
         sum=0;
         io.readInt(x);
         Foreach (i In 1 .. x) {sum=sum+i;}
@@ -1221,7 +1217,7 @@ Return this.length*this.width;
     def test_mixed4(self):
         input = """Class A{
         main(){
-        Val x,y: Int;
+        Val x,y: Int = 123;
         io.readInt(x);
         io.readInt(y);
         ## this is a line cmt
@@ -1233,18 +1229,10 @@ Return this.length*this.width;
     def test_mixed5(self):
         input = """Class A{
         main(){
-        Val x,y: Int;
+        Val x,y: Int = 123, 321;
         io.readInt(x);
         io.readInt(y);
         io.writeInt(x+y);
         }}"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 300))
-
-
-
-
-
-
-
-

@@ -1,2 +1,2 @@
-Class A{Val b: Int;}
+Class A{Val b: Int = 560_343;}
         Class B: A{ Var d:Int;

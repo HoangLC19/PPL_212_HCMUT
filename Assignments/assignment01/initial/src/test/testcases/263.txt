@@ -1,5 +1,5 @@
 Class X{
-        Val x: Array[Int, 5];
+        Val x: Array[Int, 5] = Array(1, 2132, 2_343, 343, 565);
         X(){
         Foreach (i In 1 .. 100) {
 io.writeIntLn(i);

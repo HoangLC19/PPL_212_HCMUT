@@ -1,7 +1,7 @@
 Class A{
         m(){}
         main(){
-        Val x: Int;
+        Val x: Int = 123213_2321;
         Foreach (i In 1 .. 100) {
             x.m();
             Continue;

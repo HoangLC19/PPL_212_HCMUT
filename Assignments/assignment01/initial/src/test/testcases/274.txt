@@ -1,4 +1,4 @@
 Class Lit{
         main(){
-        Val A: Array[String, 1];
+        Val A: Array[String, 1] = Array("dsfds");
         A=Array("abc\ta\nbc");}}

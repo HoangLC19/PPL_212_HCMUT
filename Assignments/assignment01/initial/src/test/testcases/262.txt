@@ -3,7 +3,7 @@ factorial(n: Int){
 If (n == 0) {Return 1;} Else {Return n * this.factorial(n - 1);}
 }
 main(){
-Val x: Int;
+Val x: Int = 3434;
 x = io.readInt();
 io.writeIntLn(this.factorial(x));
 }

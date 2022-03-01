@@ -1,7 +1,7 @@
 
                    Class Program {
     Val x : Int = 00;
-    Constructor ($y, b: Int) {
+    Constructor (y, b: Int) {
         Var c: Int = 8;
     }
 

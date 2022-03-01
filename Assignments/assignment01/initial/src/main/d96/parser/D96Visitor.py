@@ -54,13 +54,23 @@ class D96Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by D96Parser#idglist.
-    def visitIdglist(self, ctx:D96Parser.IdglistContext):
+    # Visit a parse tree produced by D96Parser#idlist.
+    def visitIdlist(self, ctx:D96Parser.IdlistContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by D96Parser#idulist.
+    def visitIdulist(self, ctx:D96Parser.IdulistContext):
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by D96Parser#mptype.
     def visitMptype(self, ctx:D96Parser.MptypeContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by D96Parser#class_type.
+    def visitClass_type(self, ctx:D96Parser.Class_typeContext):
         return self.visitChildren(ctx)
 
 
@@ -164,11 +174,6 @@ class D96Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by D96Parser#idlist.
-    def visitIdlist(self, ctx:D96Parser.IdlistContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by D96Parser#assign_stmt.
     def visitAssign_stmt(self, ctx:D96Parser.Assign_stmtContext):
         return self.visitChildren(ctx)
@@ -179,8 +184,8 @@ class D96Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by D96Parser#elseif_list.
-    def visitElseif_list(self, ctx:D96Parser.Elseif_listContext):
+    # Visit a parse tree produced by D96Parser#else_list.
+    def visitElse_list(self, ctx:D96Parser.Else_listContext):
         return self.visitChildren(ctx)
 
 

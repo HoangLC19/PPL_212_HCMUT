@@ -1,6 +1,6 @@
 Class A{
         main(){
-        Val x,y: Int;
+        Val x,y: Int = 123;
         io.readInt(x);
         io.readInt(y);
         ## this is a line cmt

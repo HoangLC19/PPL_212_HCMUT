@@ -1,6 +1,6 @@
 Class A{
         ##this is a cmt##
-        Val $a: Int;
+        Val $a: Int = 1234;
         main() {
             $a = 4+5;
         }

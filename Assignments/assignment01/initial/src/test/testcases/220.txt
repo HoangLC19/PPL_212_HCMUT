@@ -1,11 +1,11 @@
 
                     Class Program {
         main() {
-            Val x : Int;
+            Val x : Int = 2323242;
             x = New foo();
             Shape::$getNumOfShape();
             x = foo.y;
-            Foreach(a[x] In 1 .. 10) {
+            Foreach(a In 1 .. 10) {
                 If ((a[x] >= 9) || (a + 4 >= 0)) {
                     x = x + 1;
                     If (a[x] <= 0) {

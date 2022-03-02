@@ -9,7 +9,7 @@ class ParserSuite(unittest.TestCase):
         self.assertTrue(TestParser.test(input, expect, 201))
 
     def test_simple_program2(self):
-        input = """Class Rectangle: Shape {
+        input = """Class Rectangle {
                 getArea() {
                     Return Self.length * Self.width;
                 }

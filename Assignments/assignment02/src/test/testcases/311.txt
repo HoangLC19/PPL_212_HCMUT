@@ -1,0 +1,9 @@
+## This is
+            a multi-line
+            comment. ##
+            Class Program {
+                main() {
+                    Val My1stCons, My2ndCons: Int = 1 + 5; Var x, y : Int = 0, 0;
+                    Out.printInt(Shape::$numOfShape);
+                }
+            }

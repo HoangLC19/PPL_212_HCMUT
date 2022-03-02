@@ -13,7 +13,7 @@ class ASTGeneration(D96Visitor):
     def visitClassdecl_list(self, ctx: D96Parser.Classdecl_listContext):
         if ctx.getChildCount() == 1:
             return [self.visit(ctx.classdecl())]
-        return [self.visit(ctx.classdecl())] + self.visit(classdecl_list())
+        return [self.visit(ctx.classdecl())] + self.visit(ctx.classdecl_list())
 
     # classname: Id, memlist: list[MemDecl], parentname: Id => Classdecl
     def visitClassdecl(self, ctx: D96Parser.ClassdeclContext):
@@ -43,14 +43,14 @@ class ASTGeneration(D96Visitor):
             i = 0
             for ids in constlist:
                 result += [ConstDecl(ids, typ, value[i]
-                                     if value != None else None)]
+                                     if (value != None and i <= len(value) - 1) else None)]
                 i += 1
         else:  # -> VarDecl
             varlist = self.visit(ctx.getChild(1))
             i = 0
             for ids in varlist:
                 result += [VarDecl(ids, typ, value[i]
-                                   if value != None else None)]
+                                   if (value != None and i <= len(value) - 1) else None)]
                 i += 1
 
         return list(map(lambda decl: AttributeDecl(kind, decl), result))
@@ -125,61 +125,61 @@ class ASTGeneration(D96Visitor):
     def visitExp(self, ctx: D96Parser.ExpContext):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp1(0))
-        return BinaryOp(ctx.getChild(1).getText(), ctx.exp1(0), ctx.exp1(1))
+        return BinaryOp(ctx.getChild(1).getText(), self.visit(ctx.exp1(0)), self.visit(ctx.exp1(1)))
 
     # BinaryOp
     def visitExp1(self, ctx: D96Parser.Exp1Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp2(0))
-        return BinaryOp(ctx.getChild(1).getText(), ctx.exp2(0), ctx.exp2(1))
+        return BinaryOp(ctx.getChild(1).getText(), self.visit(ctx.exp2(0)), self.visit(ctx.exp2(1)))
 
     # BinaryOp
     def visitExp2(self, ctx: D96Parser.Exp2Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp3())
-        return BinaryOp(ctx.getChild(1), ctx.exp2(), ctx.exp3())
+        return BinaryOp(ctx.getChild(1).getText(), self.visit(ctx.exp2()), self.visit(ctx.exp3()))
 
     # BinaryOp
     def visitExp3(self, ctx: D96Parser.Exp3Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp4())
-        return BinaryOp(ctx.getChild(1), ctx.exp3(), ctx.exp3())
+        return BinaryOp(ctx.getChild(1).getText(), self.visit(ctx.exp3()), self.visit(ctx.exp4()))
 
     # BinaryOp
     def visitExp4(self, ctx: D96Parser.Exp4Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp5())
-        return BinaryOp(ctx.getChild(1), ctx.exp4(), ctx.exp5())
+        return BinaryOp(ctx.getChild(1).getText(), self.visit(ctx.exp4()), self.visit(ctx.exp5()))
 
     # UnaryOp
     def visitExp5(self, ctx: D96Parser.Exp5Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp6())
-        return UnaryOp(ctx.getChild(0).getText(), ctx.exp5())
+        return UnaryOp(ctx.getChild(0).getText(), self.visit(ctx.exp5()))
 
     # UnaryOp
     def visitExp6(self, ctx: D96Parser.Exp6Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp7())
-        return UnaryOp(ctx.getChild(0).getText(), ctx.exp6())
+        return UnaryOp(ctx.getChild(0).getText(), self.visit(ctx.exp6()))
 
     # ArrayCell
     def visitExp7(self, ctx: D96Parser.Exp7Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp8())
-        return ArrayCell(ctx.exp7(), self.visit(ctx.index_list()))
+        return ArrayCell(self.visit(ctx.exp7()), self.visit(ctx.index_list()))
 
     # Field access : Instance access
     def visitExp8(self, ctx: D96Parser.Exp8Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp9())
-        return FieldAccess(ctx.exp8(), Id(ctx.ID().getText()))
+        return FieldAccess(self.visit(ctx.exp8()), Id(ctx.ID().getText()))
 
     # Field access : Static access
     def visitExp9(self, ctx: D96Parser.Exp9Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp10())
-        return FieldAccess(ctx.exp9(), Id(ctx.IDUSD().getText()))
+        return FieldAccess(self.visit(ctx.exp9()), Id(ctx.IDUSD().getText()))
 
     # NewExpr Classname: Id, param: list[Expr]
     def visitExp10(self, ctx: D96Parser.Exp10Context):
@@ -193,7 +193,9 @@ class ASTGeneration(D96Visitor):
         return self.visit(ctx.exp())
 
     def visitExp12(self, ctx: D96Parser.Exp12Context):
-        return self.visit(ctx.getChild(0))
+        if ctx.literals():
+            return self.visit(ctx.literals())
+        return Id(ctx.getChild(0).getText())
 
     # => list[Expr]
     def visitExp_list(self, ctx: D96Parser.Exp_listContext):
@@ -218,6 +220,7 @@ class ASTGeneration(D96Visitor):
             return self.visit(ctx.stmt())
         return self.visit(ctx.stmt()) + self.visit(ctx.stmt_list())
 
+    # => [stmt]
     def visitStmt(self, ctx: D96Parser.StmtContext):
         return self.visit(ctx.getChild(0))
 
@@ -228,9 +231,20 @@ class ASTGeneration(D96Visitor):
         result = []
         idlist = self.visit(ctx.getChild(1))
         if ctx.VAL():  # -> ConstDecl
-            result = [ConstDecl(ids, typ, value) for ids in idllist]
+            # result = [ConstDecl(ids, typ, value) for ids in idlist]
+            constlist = self.visit(ctx.getChild(1))
+            i = 0
+            for ids in constlist:
+                result += [ConstDecl(ids, typ, value[i]
+                                     if (value != None and i <= len(value) - 1) else None)]
+                i += 1
         else:  # -> VarDecl
-            result = list(map(lambda ids: VarDecl(ids, typ, value), idlist))
+            varlist = self.visit(ctx.getChild(1))
+            i = 0
+            for ids in varlist:
+                result += [VarDecl(ids, typ, value[i]
+                                   if (value != None and i <= len(value) - 1) else None)]
+                i += 1
         return result
 
     # lhs: expr, exp: expr => [Assign(stmt)]
@@ -242,8 +256,8 @@ class ASTGeneration(D96Visitor):
     # epxr: epxr, thenStmt: Stmt, elseStmt: Stmt or None => [If(Stmt)]
     def visitIf_stmt(self, ctx: D96Parser.If_stmtContext):
         expr = self.visit(ctx.exp())
-        thenStmt = self.visit(self.block_stmt())
-        elseStmt = self.visit(ctx.self_list()) if ctx.self_list() else None
+        thenStmt = self.visit(ctx.block_stmt())
+        elseStmt = self.visit(ctx.else_list()) if ctx.else_list() else None
         return [If(expr, thenStmt, elseStmt)]
 
     # => elseStmt: Stmt
@@ -289,24 +303,25 @@ class ASTGeneration(D96Visitor):
     # expr = Expr => [Return(stmt)]
     def visitReturn_stmt(self, ctx: D96Parser.Return_stmtContext):
         if ctx.exp():
-            return Return(self.visit(ctx.exp()))
-        return Return()
+            return [Return(self.visit(ctx.exp()))]
+        return [Return()]
 
     # obj: Expr, method: Id, param: list[Expr] => [CallStmt(Stmt)]
     def visitMethod_stmt(self, ctx: D96Parser.MethodContext):
-        return [self.visit(ctx.getChild(0))]
+        return self.visit(ctx.getChild(0))
 
     def visitInstance(self, ctx: D96Parser.InstanceContext):
+
         obj = self.visit(ctx.exp())
-        ids = self.visit(Id(ctx.ID().getText()))
+        ids = Id(ctx.ID().getText())
         param = self.visit(ctx.exp_list()) if ctx.exp_list() else []
-        return CallStmt(obj, ids, param)
+        return [CallStmt(obj, ids, param)]
 
     def visitStatic(self, ctx: D96Parser.StaticContext):
         obj = self.visit(ctx.exp())
-        ids = self.visit(Id(ctx.IDUSD().getText()))
+        ids = Id(ctx.IDUSD().getText())
         param = self.visit(ctx.exp_list()) if ctx.exp_list() else []
-        return CallStmt(obj, ids, param)
+        return [CallStmt(obj, ids, param)]
 
     # value: list[Expr]
     def visitArraylit(self, ctx: D96Parser.ArraylitContext):

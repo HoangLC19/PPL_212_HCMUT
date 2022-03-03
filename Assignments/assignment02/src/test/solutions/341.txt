@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(A),[MethodDecl(Id(main),Instance,[],Block([For(Id(i),ArrayCell(FieldAccess(Id(a),Id(k)),[IntLit(3)]),IntLit(100),Block([If(BinaryOp(==,BinaryOp(%,Id(i),IntLit(2)),IntLit(0)),Block([AssignStmt(Id(i),BinaryOp(*,Id(i),IntLit(2)))]))])])]))])])

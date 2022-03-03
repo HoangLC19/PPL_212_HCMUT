@@ -1,0 +1,20 @@
+Class Shape {
+                        Val numOfShape,$b,c: Int = 1,2,3;
+                        Var n,$m,q : Float;
+                        Test(a,b : Int; c : Float){
+                            If (b + c == 3)
+                            {
+                                Self.numOfShape = 3;
+                                Return a + 1;
+                            }
+                            Elseif (a == 4)
+                            {
+                                Return 0;
+                            }
+                            Else
+                            {
+                                Return 1;
+                            }
+                        }
+                        }
+                        

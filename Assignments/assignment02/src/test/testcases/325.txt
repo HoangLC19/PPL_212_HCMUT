@@ -1,11 +1,16 @@
 Class Program {
-    Val x : Int = 00;
-    Constructor (y, b: Int) {
-        Var c: Int = 8;
+        main() {
+            Val x : Int = 2323242;
+            x = New foo();
+            Shape::$getNumOfShape();
+            x = foo.y;
+            Foreach(a In 1 .. 10) {
+                If ((a[x] >= 9) || (a + 4 >= 0)) {
+                    x = x + 1;
+                    If (a[x] <= 0) {
+                        Out.printInt(x);
+                    }
+                }
+            }
+        }
     }
-
-    main() {
-        a[c] = b[a + c][a/c];
-        Self.a = 4;
-    }
-}

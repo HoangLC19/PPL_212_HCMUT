@@ -34,28 +34,33 @@ class ASTGeneration(D96Visitor):
 
     # kind: SIKind, decl: StoreDecl => list[AttributeDecl]
     def visitAttribute(self, ctx: D96Parser.AttributeContext):
-        kind = Static() if ctx.idulist() else Instance()
+        idlist = self.visit(ctx.idglist())  # list[(id, int),...]
+        kind = list(map(lambda ids: Static()
+                    if ids[1] == 2 else Instance(), idlist))
         typ = self.visit(ctx.mptype())
         value = self.visit(ctx.exp_list()) if ctx.ASSIGN() else None
         result = []
         if ctx.VAL():  # -> ConstDecl
-            constlist = self.visit(ctx.getChild(1))
             i = 0
-            for ids in constlist:
-                result += [ConstDecl(ids, typ, value[i]
+            for ids in idlist:
+                result += [ConstDecl(ids[0], typ, value[i]
                                      if (value != None and i <= len(value) - 1) else None)]
                 i += 1
         else:  # -> VarDecl
-            varlist = self.visit(ctx.getChild(1))
             i = 0
-            for ids in varlist:
-                result += [VarDecl(ids, typ, value[i]
+            for ids in idlist:
+                result += [VarDecl(ids[0], typ, value[i]
                                    if (value != None and i <= len(value) - 1) else None)]
                 i += 1
 
-        return list(map(lambda decl: AttributeDecl(kind, decl), result))
+        # return list(map(lambda decl: AttributeDecl(kind, decl), result))
+        attributeList = []
+        for ki, decl in zip(kind, result):
+            attributeList += [AttributeDecl(ki, decl)]
+        return attributeList
 
     # kind: SIKind, name: Id, param: List[VarDecl], body: block => [MethodDecl]
+
     def visitMethod(self, ctx: D96Parser.MethodContext):
         kind = Static() if ctx.IDUSD() else Instance()
         if ctx.CONSTRUCTOR():
@@ -79,13 +84,19 @@ class ASTGeneration(D96Visitor):
     def visitParams_decl(self, ctx: D96Parser.Params_declContext):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.param_decl())
-        return self.visit(ctx.param_decl()) + self.visit(params_decl())
+        return self.visit(ctx.param_decl()) + self.visit(ctx.params_decl())
 
     # => [VarDecl]
     def visitParam_decl(self, ctx: D96Parser.Param_declContext):
         varlist = self.visit(ctx.idlist())  # -> list[Id]
         typ = self.visit(ctx.mptype())
         return list(map(lambda var: VarDecl(var, typ), varlist))
+
+    # => list[(id, int)] int: 1 => Instance(), int: 2 => Static()
+    def visitIdglist(self, ctx: D96Parser.IdglistContext):
+        if ctx.getChildCount() == 1:
+            return [(Id(ctx.ID().getText()), 1) if ctx.ID() else (Id(ctx.IDUSD().getText()), 2)]
+        return [(Id(ctx.ID().getText()), 1) if ctx.ID() else (Id(ctx.IDUSD().getText()), 2)] + self.visit(ctx.idglist())
 
     # => list[id]
     def visitIdlist(self, ctx: D96Parser.IdlistContext):
@@ -173,12 +184,17 @@ class ASTGeneration(D96Visitor):
     def visitExp8(self, ctx: D96Parser.Exp8Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp9())
+        if ctx.LB() and ctx.RB():
+            return CallExpr(self.visit(ctx.exp8()), Id(ctx.ID().getText()), self.visit(ctx.exp_list())) if ctx.exp_list() else CallExpr(self.visit(ctx.exp8()), Id(ctx.ID().getText()), [])
         return FieldAccess(self.visit(ctx.exp8()), Id(ctx.ID().getText()))
 
     # Field access : Static access
+
     def visitExp9(self, ctx: D96Parser.Exp9Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp10())
+        if ctx.LB() and ctx.RB():
+            return CallExpr(self.visit(ctx.exp9()), Id(ctx.IDUSD().getText()), self.visit(ctx.exp_list())) if ctx.exp_list() else CallExpr(self.visit(ctx.exp9()), Id(ctx.IDUSD().getText()), [])
         return FieldAccess(self.visit(ctx.exp9()), Id(ctx.IDUSD().getText()))
 
     # NewExpr Classname: Id, param: list[Expr]

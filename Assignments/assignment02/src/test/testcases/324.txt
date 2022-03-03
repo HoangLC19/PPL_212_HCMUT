@@ -1,16 +1,33 @@
-Class Program {
-        main() {
-            Val x : Int = 2323242;
-            x = New foo();
-            Shape::$getNumOfShape();
-            x = foo.y;
-            Foreach(a In 1 .. 10) {
-                If ((a[x] >= 9) || (a + 4 >= 0)) {
-                    x = x + 1;
-                    If (a[x] <= 0) {
-                        Out.printInt(x);
+Class foo {
+            Val $y: String = "HEllo";
+
+            Destructor() {
+                Foreach (i In 1 .. 100 By 2) {
+                    Var r, s: Int;
+                    r = 2.0;
+                    Var a, b: Array[Int, 5];
+                    s = r * r * Self.myPI;
+                    a[0] = s;
+                }
+
+                Foreach (x In 5 .. 2) {
+                    Out.printInt(arr[x]);
+                    If (x == 4) {
+                        x = x*a;
+                        Break;
+                    }
+                    Elseif(x == 3) {
+                        Continue;
                     }
                 }
             }
         }
-    }
+
+        Class Program {
+            main() {
+                Val x : Int = 1232;
+                x = New foo();
+                Shape::$getNumOfShape();
+                x = foo.y;
+            }
+        }

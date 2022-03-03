@@ -1,0 +1,9 @@
+Class Program {
+        main(a: Array[String, 5]) {
+            a[4] = a[4] +. "hello";
+            Var _ : Int = 023 + a[2]/(5*6);
+            Return _;
+
+        }
+
+    }

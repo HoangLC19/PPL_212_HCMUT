@@ -1,12 +1,12 @@
 
-            Class Pro {
-                MainMenu(a: Int; b: Int) {
-                    Self.arr[4] = b.getName() + a.exp();
+                Class Pro {
+                    MainMenu(a: Int; b: Int) {
+                        Self.arr[4] = b.getName() + a.exp();
+                    }
                 }
-            }
-            Class ProMax {
-                iPhone13(){
-                    Return 40000000;
+                Class ProMax {
+                    iPhone13(){
+                        Return 40000000;
+                    }
                 }
-            }
-            
+                

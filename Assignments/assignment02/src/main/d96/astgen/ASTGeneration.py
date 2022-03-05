@@ -227,7 +227,7 @@ class ASTGeneration(D96Visitor):
 
     # inst: list[inst] => Block(list[inst])
     def visitBlock_stmt(self, ctx: D96Parser.Block_stmtContext):
-        inst = self.visit(ctx.stmt_list())
+        inst = self.visit(ctx.stmt_list()) if ctx.stmt_list() else []
         return Block(inst)
 
     # => list[inst]

@@ -1,5 +1,5 @@
 Class Shape {
-                $getNumOfShape(sum: Int) {
-                    Return Self.length * Self.width;
+                    $getNumOfShape(sum: Int) {
+                        Return Self.length * Self.width;
+                    }
                 }
-            }

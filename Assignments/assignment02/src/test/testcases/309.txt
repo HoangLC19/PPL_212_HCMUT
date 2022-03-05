@@ -1,5 +1,5 @@
 Class Program {
-                main() {
-                    Out.printInt(Shape::$numOfShape);
+                    main() {
+                        Out.printInt(Shape::$numOfShape);
+                    }
                 }
-            }

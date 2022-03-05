@@ -1,8 +1,8 @@
 Class Program {
-                getName() {
-                    Var b: Float = 1E10.2;
+                    getName() {
+                        Var b: Float = 1E10.2;
+                    }
+                    main() {
+                        Var a: String;
+                    }
                 }
-                main() {
-                    Var a: String;
-                }
-            }

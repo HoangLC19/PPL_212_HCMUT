@@ -1,14 +1,14 @@
 Class Program {
-                Val $x : Int = 3248923;
-                main() {
-                    Val My1stCons, My2ndCons: Int = 1 + 5, 2;
-                    Var x, y : Int = 1e-3.54, 0x1AD;
-                    Val a : Array[Int, 5] = Array(1, 2, 3, 4, 5);
-                    Var _dfjkld: String = "This is a string containing tab \t";
-                    Var c: Array[Array[Int, 3], 4] = Array(Array(1, 2) , Array("dsfhk"));
-                    $x = a + b;
-                    $x = New Program();
-                    $x = a[6+4][b[3]];
-                    Return $x;
+                    Val $x : Int = 3248923;
+                    main() {
+                        Val My1stCons, My2ndCons: Int = 1 + 5, 2;
+                        Var x, y : Int = 1e-3.54, 0x1AD;
+                        Val a : Array[Int, 5] = Array(1, 2, 3, 4, 5);
+                        Var _dfjkld: String = "This is a string containing tab \t";
+                        Var c: Array[Array[Int, 3], 4] = Array(Array(1, 2) , Array("dsfhk"));
+                        $x = a + b;
+                        $x = New Program();
+                        $x = a[6+4][b[3]];
+                        Return $x;
+                    }
                 }
-            }

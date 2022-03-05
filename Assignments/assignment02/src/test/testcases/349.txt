@@ -1,0 +1,7 @@
+
+            Class A{
+            main(){
+            Var m: Float;
+            m =   x.m(b[1*3+4-9*1.3]) - this.kd;
+            }}
+            

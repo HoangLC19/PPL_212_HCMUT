@@ -1,8 +1,8 @@
 Class Program {
-                main() {
-                    Val My1stCons, My2ndCons: Int = 1 + 5, 2;
-                    Var x, y : Int = 1e-3.54, 1_2324_545;
-                    Out.printInt(Shape::$numOfShape);
-                    Val a : Array[Int, 5] = Array(1, 2, 3, 4, 5);
+                    main() {
+                        Val My1stCons, My2ndCons: Int = 1 + 5, 2;
+                        Var x, y : Int = 1e-3.54, 1_2324_545;
+                        Out.printInt(Shape::$numOfShape);
+                        Val a : Array[Int, 5] = Array(1, 2, 3, 4, 5);
+                    }
                 }
-            }

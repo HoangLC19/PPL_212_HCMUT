@@ -1,10 +1,10 @@
 Class Dog: Animal{
-                $gaugau() {
-                    ae = b[6][8];
+                    $gaugau() {
+                        ae = b[6][8];
+                    }
                 }
-            }
-            Class Snake: lizard {
-                $OpOp() {
-                    Return Self.Op;
+                Class Snake: lizard {
+                    $OpOp() {
+                        Return Self.Op;
+                    }
                 }
-            }

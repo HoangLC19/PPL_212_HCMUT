@@ -1,15 +1,15 @@
 Class foo {
-                Val y: String = "HEllo";
-                Constructor () {
-                    Var a: Int = 34243;
-                    If (!a || a == 10) {
-                        a = -a;
-                    }
-                    Elseif (a%2 != 0) {
-                        a = Self.a + 4;
-                    }
-                    Else {
-                        a = 0;
+                    Val y: String = "HEllo";
+                    Constructor () {
+                        Var a: Int = 34243;
+                        If (!a || a == 10) {
+                            a = -a;
+                        }
+                        Elseif (a%2 != 0) {
+                            a = Self.a + 4;
+                        }
+                        Else {
+                            a = 0;
+                        }
                     }
                 }
-            }

@@ -16,13 +16,14 @@ classdecl:
 	CLASS ID LP members RP
 	| CLASS ID CL ID LP members RP;
 members: (attribute | method) members | attribute | method |;
-attribute:
-	(VAL | VAR) (idlist | idulist) CL mptype SM
-	| (VAL | VAR) (idlist | idulist) CL mptype ASSIGN exp_list SM;
+
+attribute: (VAL | VAR) idglist CL mptype SM
+	| (VAL | VAR) idglist CL mptype ASSIGN exp_list SM;
 method: (ID | IDUSD | CONSTRUCTOR | DESTRUCTOR) param_list block_stmt;
 param_list: LB params_decl RB | LB RB;
 params_decl: param_decl SM params_decl | param_decl;
 param_decl: idlist CL mptype;
+idglist: (ID | IDUSD) CM idglist | ID | IDUSD;
 idlist: ID CM idlist | ID;
 idulist: IDUSD CM idulist | IDUSD;
 mptype:
@@ -34,6 +35,7 @@ mptype:
 	| class_type;
 class_type: exp10;
 array_type: ARRAY LS (mptype | ARRAY) CM INTLIT RS;
+
 //expression
 exp: exp1 (ADDT | ET) exp1 | exp1;
 exp1: exp2 (EQ | NEQ | LT | GT | LE | GE) exp2 | exp2;
@@ -103,8 +105,6 @@ static:
 	| exp STA IDUSD LB RB;
 
 arraylit: ARRAY LB exp_list RB;
-//indexed_array: ARRAY LB exp_list RB; indexed_array_list: indexed_array CM indexed_array_list |
-// indexed_array; multi_array: ARRAY LB indexed_array_list RB;
 
 /////////////////////////////////////////////////////////
 

@@ -54,6 +54,11 @@ class D96Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by D96Parser#idglist.
+    def visitIdglist(self, ctx:D96Parser.IdglistContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by D96Parser#idlist.
     def visitIdlist(self, ctx:D96Parser.IdlistContext):
         return self.visitChildren(ctx)

@@ -1,0 +1,11 @@
+Class Program {
+            Val x : Int = 00;
+            Constructor (y, b: Int) {
+                Var c: Int = 8;
+            }
+
+            main() {
+                a[c] = b[a + c][a/c];
+                Self.a = 4;
+            }
+        }

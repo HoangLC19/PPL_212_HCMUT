@@ -1,0 +1,15 @@
+
+                Class Shape {
+    Var $numOfShape: Int = 0;
+    Val $immuAttribute: Int = 1;
+    Val length,width: Float = 1.3e10;
+    $getNumOfShape() {
+    Return numOfShape;
+    }
+    }
+    Class Rectangle: Shape {
+    getArea(){
+    Return this.length*this.width;
+    }
+    }
+                

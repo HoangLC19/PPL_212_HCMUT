@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(A),[MethodDecl(Id(main),Instance,[],Block([ConstDecl(Id(_x),BoolType,BooleanLit(True)),If(Id(x),Block([If(BinaryOp(==,FieldAccess(Id(this),Id(m)),IntLit(7)),Block([AssignStmt(Id(x),BooleanLit(True))]),Block([Call(Id(io),Id(writeInt),[IntLit(1000232)])]))]),Block([Call(Id(io),Id(writeInt),[IntLit(21)])]))]))])])

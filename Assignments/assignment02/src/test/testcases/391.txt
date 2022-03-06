@@ -1,0 +1,5 @@
+
+            Class foo{ Var x: Float;
+        }
+        ##cmt##
+            

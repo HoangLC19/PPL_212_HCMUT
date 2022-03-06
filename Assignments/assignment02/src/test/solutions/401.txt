@@ -1,1 +1,1 @@
-Type Mismatch In Statement: CallExpr(Id(putIntLn),List())
+Program([ClassDecl(Id(A),[MethodDecl(Id(x),Instance,[],Block([]))]),ClassDecl(Id(B),Id(A),[MethodDecl(Id(main),Instance,[],Block([ConstDecl(Id(a),IntType,IntLit(8))]))])])

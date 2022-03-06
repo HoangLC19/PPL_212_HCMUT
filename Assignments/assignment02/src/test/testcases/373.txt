@@ -1,0 +1,25 @@
+Class foo {
+                    Val y: String = "HEllo";
+                    Constructor () {
+                        Var a: Int = 34243;
+                        If (!a || a == 10) {
+                            a = -a;
+                        }
+                        Elseif (a%2 != 0) {
+                            a = Self.a + 4;
+                        }
+                        Else {
+                            a = 0;
+                        }
+                    }
+
+                    Destructor() {
+                        Foreach (i In 1 .. 100 By 0) {
+                            Out.printInt(i+1);
+                        }
+
+                        Foreach (x In 5 .. 2) {
+                            Out.printInt(arr[x]);
+                        }
+                    }
+                }

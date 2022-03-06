@@ -1,0 +1,12 @@
+
+                Class X{
+            Val x: Array[Int, 5] = Array(1, 2132, 2343, 3433, 565);
+            X(){
+            Foreach (i In 1 .. 100) {
+    io.writeIntLn(i);
+    x[i] = i + 1;
+    }
+    Foreach (x In 5 .. 2) {
+    io.writeIntLn(x);}
+    }}
+                

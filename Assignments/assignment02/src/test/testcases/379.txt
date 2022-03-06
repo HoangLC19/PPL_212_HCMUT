@@ -1,0 +1,6 @@
+Class Program {
+            main(a: Array[Float, 3]) {
+                a[4] = a[4] +. "hello";
+            }
+
+        }

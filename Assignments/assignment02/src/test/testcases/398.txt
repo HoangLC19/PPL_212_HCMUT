@@ -1,0 +1,5 @@
+
+            Class A{Val x: Float = 1.2;}
+        Class B: A{Val c: String = "HLC";}
+        Class C: B{ Val d: Int = 1_2;}
+            

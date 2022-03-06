@@ -1,0 +1,7 @@
+
+            Class A{
+            main(){
+            Val x: Boolean = False;
+            If (x)  {x=True;}
+            }}
+            

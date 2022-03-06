@@ -1,0 +1,29 @@
+
+                Class Shape {
+    Var length,width: Float;
+    getArea() {}
+    Shape(length,width: Float){
+    this.length = length;
+    this.width = width;
+    }
+    }
+    Class Rectangle: Shape {
+    getArea(){
+    Return this.length*this.width;
+    }
+    }
+    Class Triangle: Shape {
+    getArea(){
+    Return this.length*this.width / 100;
+    }
+    }
+    Class Example2 {
+    main(){
+
+    s = New Rectangle(3,5);
+    io.writeFloatLn(s.getArea());
+    s = New Triangle(3,4);
+    io.writeFloatLn(s.getArea());
+    }
+    }
+                

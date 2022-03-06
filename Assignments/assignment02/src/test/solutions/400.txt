@@ -1,1 +1,1 @@
-Undeclared Function: foo
+Program([ClassDecl(Id(A),[MethodDecl(Id(x),Instance,[],Block([]))]),ClassDecl(Id(B),Id(A),[MethodDecl(Id(x),Instance,[],Block([Call(Id(io),Id(writeInt),[ArrayCell(Id(a),[IntLit(1),IntLit(3)])])]))])])

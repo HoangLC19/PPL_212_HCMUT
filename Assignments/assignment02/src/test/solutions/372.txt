@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(foo),[AttributeDecl(Instance,ConstDecl(Id(y),StringType,StringLit(Hello))),MethodDecl(Id(Constructor),Instance,[],Block([VarDecl(Id(a),IntType,IntLit(3424334230498)),If(BinaryOp(==,BinaryOp(||,UnaryOp(!,Id(a)),Id(a)),FloatLit(1.23)),Block([AssignStmt(Id(a),UnaryOp(-,UnaryOp(-,Id(a))))]),Block([AssignStmt(Id(a),IntLit(0))]))]))])])

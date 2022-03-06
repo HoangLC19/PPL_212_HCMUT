@@ -1,0 +1,11 @@
+
+                Class A{
+            m(){}
+            main(){
+            Val a: Int = 1232132321;
+            Foreach (i In 1 .. 150) {
+                x.m();
+                Continue;
+            }
+            }}
+            

@@ -1,0 +1,12 @@
+Class foo {
+                    Val y: String = "Hello";
+                    Constructor () {
+                        Var a: Int = 34243_34230498;
+                        If (!a || a == 1.23) {
+                            a = --a;
+                        }
+                        Else {
+                            a = 0;
+                        }
+                    }
+                }

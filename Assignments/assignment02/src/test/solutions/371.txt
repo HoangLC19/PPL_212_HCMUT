@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(Lit),[MethodDecl(Id(main),Instance,[],Block([ConstDecl(Id(A),ArrayType(1,StringType),[StringLit(adsklf)]),AssignStmt(Id(A),[StringLit(\t\b\f)])]))])])

@@ -1,0 +1,6 @@
+
+           Class School{
+        Val id: Int;
+        print(){io.writeInt(this.id);}
+        }
+            

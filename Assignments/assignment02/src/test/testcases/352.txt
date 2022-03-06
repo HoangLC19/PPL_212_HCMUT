@@ -1,0 +1,9 @@
+
+            Class A{ Var x: Int;
+        }
+        Class B: A {
+            B(){}
+            $B(x,y: String; m: Int){}
+        }
+        ##cmt##
+            

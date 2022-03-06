@@ -1,7 +1,7 @@
 import unittest
 from TestUtils import TestAST
 from AST import *
-from main.d96.utils.AST import FieldAccess
+from main.d96.utils.AST import AttributeDecl, FieldAccess
 
 
 class ASTGenSuite(unittest.TestCase):
@@ -761,3 +761,281 @@ class ASTGenSuite(unittest.TestCase):
         expect = str(Program([ClassDecl(Id("A"), [MethodDecl(Instance(), Id("main"), [], Block([ConstDecl(Id("x"), BoolType(), BooleanLiteral(
             "False")), If(Id("x"), Block([Assign(Id("x"), ArrayLiteral([IntLiteral("3"), IntLiteral("4"), IntLiteral("5")]))]))]))])]))
         self.assertTrue(TestAST.test(input, expect, 350))
+
+    def test_simple_program51(self):
+        input = """
+            Class A{ Var x: Int;
+        }
+        ##cmt##
+            """
+        expect = str(Program(
+            [ClassDecl(Id("A"), [AttributeDecl(Instance(), VarDecl(Id("x"), IntType()))])]))
+        self.assertTrue(TestAST.test(input, expect, 351))
+
+    def test_simple_program52(self):
+        input = """
+            Class A{ Var x: Int;
+        }
+        Class B: A {
+            B(){}
+            $B(x,y: String; m: Int){}
+        }
+        ##cmt##
+            """
+        expect = str(Program(
+            [ClassDecl(Id("A"), [AttributeDecl(Instance(), VarDecl(Id("x"), IntType()))]), ClassDecl(Id("B"), [MethodDecl(Instance(), Id("B"), [], Block([])), MethodDecl(Static(), Id("$B"), [VarDecl(Id("x"), StringType()), VarDecl(Id("y"), StringType()), VarDecl(Id("m"), IntType())], Block([]))], Id("A"))]))
+        self.assertTrue(TestAST.test(input, expect, 352))
+
+    def test_simple_program53(self):
+        input = """
+                Class Shape {
+    Var length,width: Float;
+    getArea() {}
+    Shape(length,width: Float){
+    this.length = length;
+    this.width = width;
+    }
+    }
+    Class Rectangle: Shape {
+    getArea(){
+    Return this.length*this.width;
+    }
+    }
+    Class Triangle: Shape {
+    getArea(){
+    Return this.length*this.width / 2;
+    }
+    }
+    Class Example2 {
+    main(){
+
+    s = New Rectangle(3,4);
+    io.writeFloatLn(s.getArea());
+    s = New Triangle(3,4);
+    io.writeFloatLn(s.getArea());
+    }
+    }
+                """
+        expect = str(Program([ClassDecl(Id("Shape"), [AttributeDecl(Instance(), VarDecl(Id("length"), FloatType())), AttributeDecl(Instance(), VarDecl(
+            Id("width"), FloatType())), MethodDecl(Instance(), Id("getArea"), [], Block([])), MethodDecl(Instance(), Id("Shape"), [VarDecl(Id("length"), FloatType()), VarDecl(
+                Id("width"), FloatType())], Block([Assign(FieldAccess(Id("this"), Id("length")), Id("length")), Assign(FieldAccess(Id("this"), Id("width")), Id("width"))]))]), ClassDecl(Id("Rectangle"), [MethodDecl(Instance(), Id("getArea"), [], Block([Return(BinaryOp("*", FieldAccess(Id("this"), Id("length")), FieldAccess(Id("this"), Id("width"))))]))], Id("Shape")), ClassDecl(Id("Triangle"), [MethodDecl(Instance(), Id("getArea"), [], Block([Return(BinaryOp("/", BinaryOp("*", FieldAccess(Id("this"), Id("length")), FieldAccess(Id("this"), Id("width"))), IntLiteral("2")))]))], Id("Shape")), ClassDecl(Id("Example2"), [MethodDecl(Instance(), Id("main"), [], Block([Assign(Id("s"), NewExpr(Id("Rectangle"), [IntLiteral("3"), IntLiteral("4")])), CallStmt(Id("io"), Id("writeFloatLn"), [CallExpr(Id("s"), Id("getArea"), [])]), Assign(Id("s"), NewExpr(Id("Triangle"), [IntLiteral("3"), IntLiteral("4")])), CallStmt(Id("io"), Id("writeFloatLn"), [CallExpr(Id("s"), Id("getArea"), [])])]))])]))
+        self.assertTrue(TestAST.test(input, expect, 353))
+
+    def test_simple_program53(self):
+        input = """
+                Class Example1 {
+    factorial(n: Int){
+    If (n == 0) {Return 1;} Else {Return n * this.factorial(n - 1);}
+    }
+    main(){
+    Val x: Int = 3434;
+    x = io.readInt();
+    io.writeIntLn(this.factorial(x));
+    }
+    }
+                """
+        expect = str(Program([ClassDecl(Id("Example1"), [MethodDecl(Instance(), Id("factorial"), [VarDecl(Id("n"), IntType())], Block([If(BinaryOp("==", Id("n"), IntLiteral("0")), Block([Return(IntLiteral("1"))]), Block([Return(BinaryOp("*", Id("n"), CallExpr(Id("this"), Id("factorial"), [BinaryOp(
+            "-", Id("n"), IntLiteral("1"))])))]))])), MethodDecl(Instance(), Id("main"), [], Block([ConstDecl(Id("x"), IntType(), IntLiteral("3434")), Assign(Id("x"), CallExpr(Id("io"), Id("readInt"), [])), CallStmt(Id("io"), Id("writeIntLn"), [CallExpr(Id("this"), Id("factorial"), [Id("x")])])]))])]))
+        self.assertTrue(TestAST.test(input, expect, 353))
+
+    def test_simple_program54(self):
+        input = """
+                Class X{
+            Val x: Array[Int, 5] = Array(1, 2132, 2_343, 343, 565);
+            X(){
+            Foreach (i In 1 .. 100) {
+    io.writeIntLn(i);
+    x[i] = i + 1;
+    }
+    Foreach (x In 5 .. 2) {
+    io.writeIntLn(x);}
+    }}
+                """
+        expect = str(Program([ClassDecl(Id("X"), [AttributeDecl(Instance(), ConstDecl(Id("x"), ArrayType(5, IntType()), ArrayLiteral([IntLiteral("1"), IntLiteral("2132"), IntLiteral("2343"), IntLiteral("343"), IntLiteral("565")]))), MethodDecl(Instance(), Id("X"), [], Block(
+            [For(Id("i"), IntLiteral("1"), IntLiteral("100"), Block([CallStmt(Id("io"), Id("writeIntLn"), [Id("i")]), Assign(ArrayCell(Id("x"), [Id("i")]), BinaryOp("+", Id("i"), IntLiteral("1")))])), For(Id("x"), IntLiteral("5"), IntLiteral("2"), Block([CallStmt(Id("io"), Id("writeIntLn"), [Id("x")])]))]))])]))
+        self.assertTrue(TestAST.test(input, expect, 354))
+
+    def test_simple_program55(self):
+        input = """
+                Class Shape {
+    Var $numOfShape: Int = 0;
+    Val $immuAttribute: Int = 0;
+    Val length,width: Float = 1.3e10;
+    $getNumOfShape() {
+    Return numOfShape;
+    }
+    }
+    Class Rectangle: Shape {
+    getArea(){
+    Return this.length*this.width;
+    }
+    }
+                """
+        expect = str(Program([ClassDecl(Id("Shape"), [AttributeDecl(Static(), VarDecl(Id("$numOfShape"), IntType(), IntLiteral("0"))), AttributeDecl(Static(), ConstDecl(Id("$immuAttribute"), IntType(), IntLiteral("0"))), AttributeDecl(Instance(), ConstDecl(Id("length"), FloatType(), FloatLiteral("1.3e10"))), AttributeDecl(
+            Instance(), ConstDecl(Id("width"), FloatType())), MethodDecl(Static(), Id("$getNumOfShape"), [], Block([Return(Id("numOfShape"))]))]), ClassDecl(Id("Rectangle"), [MethodDecl(Instance(), Id("getArea"), [], Block([Return(BinaryOp("*", FieldAccess(Id("this"), Id("length")), FieldAccess(Id("this"), Id("width"))))]))], Id("Shape"))]))
+        self.assertTrue(TestAST.test(input, expect, 355))
+
+    def test_simple_program56(self):
+        input = """
+            Class A{Var b: Int;}
+        Class B: A{ Val d: Int = 324234;}
+            """
+        expect = str(Program([ClassDecl(Id("A"), [AttributeDecl(Instance(), VarDecl(Id("b"), IntType()))]), ClassDecl(
+            Id("B"), [AttributeDecl(Instance(), ConstDecl(Id("d"), IntType(), IntLiteral("324234")))], Id("A"))]))
+        self.assertTrue(TestAST.test(input, expect, 356))
+
+    def test_simple_program57(self):
+        input = """
+            Class A{Val x: Float = 1.2;}
+        Class B: A{Val c: String = "HLC";}
+        Class C: B{ Val d: Int = 4;}
+            """
+        expect = str(Program([ClassDecl(Id("A"), [AttributeDecl(Instance(), ConstDecl(Id("x"), FloatType(), FloatLiteral("1.2")))]), ClassDecl(
+            Id("B"), [AttributeDecl(Instance(), ConstDecl(Id("c"), StringType(), StringLiteral("HLC")))], Id("A")), ClassDecl(Id("C"), [AttributeDecl(Instance(), ConstDecl(Id("d"), IntType(), IntLiteral("4")))], Id("B"))]))
+        self.assertTrue(TestAST.test(input, expect, 357))
+
+    def test_simple_program58(self):
+        input = """
+            Class A{x(){}}
+        Class B: A{main(){this.x();}}
+            """
+        expect = str(Program([ClassDecl(Id("A"), [MethodDecl(Instance(), Id("x"), [], Block([]))]), ClassDecl(
+            Id("B"), [MethodDecl(Instance(), Id("main"), [], Block([CallStmt(Id("this"), Id("x"), [])]))], Id("A"))]))
+        self.assertTrue(TestAST.test(input, expect, 358))
+
+    def test_simple_program59(self):
+        input = """
+            Class A{x(){}}
+        Class B: A{x(){io.writeInt(a[1][2]);}}
+            """
+        expect = str(Program([ClassDecl(Id("A"), [MethodDecl(Instance(), Id("x"), [], Block([]))]), ClassDecl(
+            Id("B"), [MethodDecl(Instance(), Id("x"), [], Block([CallStmt(Id("io"), Id("writeInt"), [ArrayCell(Id("a"), [IntLiteral("1"), IntLiteral("2")])])]))], Id("A"))]))
+        self.assertTrue(TestAST.test(input, expect, 359))
+
+    def test_simple_program60(self):
+        input = """
+            Class A{x(){}}
+        Class B:A {main(){Val a: Int = 7;}}
+            """
+        expect = str(Program([ClassDecl(Id("A"), [MethodDecl(Instance(), Id("x"), [], Block([]))]), ClassDecl(
+            Id("B"), [MethodDecl(Instance(), Id("main"), [], Block([ConstDecl(Id("a"), IntType(), IntLiteral("7"))]))], Id("A"))]))
+        self.assertTrue(TestAST.test(input, expect, 360))
+
+    def test_simple_program61(self):
+        input = """
+           Class A{x(){}}
+        Class B:A {main(){Val a: Int = 7; a = a*6/10;}}
+            """
+        expect = str(Program([ClassDecl(Id("A"), [MethodDecl(Instance(), Id("x"), [], Block([]))]), ClassDecl(
+            Id("B"), [MethodDecl(Instance(), Id("main"), [], Block([ConstDecl(Id("a"), IntType(), IntLiteral("7")), Assign(Id("a"), BinaryOp("/", BinaryOp("*", Id("a"), IntLiteral("6")), IntLiteral("10")))]))], Id("A"))]))
+        self.assertTrue(TestAST.test(input, expect, 361))
+
+    def test_simple_program62(self):
+        input = """
+           Class School{ Val $longitude,$latitude: Int;}
+            """
+        expect = str(Program([ClassDecl(Id("School"), [AttributeDecl(Static(), ConstDecl(
+            Id("$longitude"), IntType())), AttributeDecl(Static(), ConstDecl(Id("$latitude"), IntType()))])]))
+        self.assertTrue(TestAST.test(input, expect, 362))
+
+    def test_simple_program63(self):
+        input = """
+           Class School{Val id: Float;}
+        Class Faculty { Var id: Int;}
+            """
+        expect = str(Program([ClassDecl(Id("School"), [AttributeDecl(Instance(), ConstDecl(
+            Id("id"), FloatType()))]), ClassDecl(Id("Faculty"), [AttributeDecl(Instance(), VarDecl(Id("id"), IntType()))])]))
+        self.assertTrue(TestAST.test(input, expect, 363))
+
+    def test_simple_program64(self):
+        input = """
+           Class School{
+        Val id: Int;
+        print(){io.writeInt(this.id);}
+        }
+            """
+        expect = str(Program([ClassDecl(Id("School"), [AttributeDecl(Instance(), ConstDecl(
+            Id("id"), IntType())), MethodDecl(Instance(), Id("print"), [], Block([CallStmt(Id("io"), Id("writeInt"), [FieldAccess(Id("this"), Id("id"))])]))])]))
+        self.assertTrue(TestAST.test(input, expect, 364))
+
+    def test_simple_program65(self):
+        input = """
+          Class School{
+        Val id: Int;
+        print(){io.writeInt(this.id);}
+        }
+        Class Faculty{Var id: String; main(){Return 0;}}
+            """
+        expect = str(Program([ClassDecl(Id("School"), [AttributeDecl(Instance(), ConstDecl(
+            Id("id"), IntType())), MethodDecl(Instance(), Id("print"), [], Block([CallStmt(Id("io"), Id("writeInt"), [FieldAccess(Id("this"), Id("id"))])]))]), ClassDecl(Id("Faculty"), [AttributeDecl(Instance(), VarDecl(Id("id"), StringType())), MethodDecl(Instance(), Id("main"), [], Block([Return(IntLiteral("0"))]))])]))
+        self.assertTrue(TestAST.test(input, expect, 365))
+
+    def test_simple_program66(self):
+        input = """
+          Class School{
+        Val id: Int;
+        print(){
+        Val a: Int =100;
+        io.writeInt(a);}
+        }
+            """
+        expect = str(Program([ClassDecl(Id("School"), [AttributeDecl(Instance(), ConstDecl(
+            Id("id"), IntType())), MethodDecl(Instance(), Id("print"), [], Block([ConstDecl(Id("a"), IntType(), IntLiteral("100")), CallStmt(Id("io"), Id("writeInt"), [Id("a")])]))])]))
+        self.assertTrue(TestAST.test(input, expect, 366))
+
+        def test_simple_program67(self):
+            input = """
+              Class Program {
+        Var x: String = "sdfsdfdsfsdf";
+        main(a: Array[String, 5]) {
+            a[4] = a[4] +. ("hello" ==. "HELLO") * 2%3;
+            Var _ : Int = 023 + a[2]/(5*6);
+        }
+    }
+                """
+            expect = "Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(x),StringType,StringLit(sdfsdfdsfsdf))),MethodDecl(Id(main),Instance,[param(Id(a),ArrayType(5,StringType))],Block([AssignStmt(ArrayCell(Id(a),[IntLit(4)]),BinaryOp(+.,ArrayCell(Id(a),[IntLit(4)]),BinaryOp(%,BinaryOp(*,BinaryOp(==.,StringLit(hello),StringLit(HELLO)),IntLit(2)),IntLit(3)))),VarDecl(Id(_),IntType,BinaryOp(+,IntLit(023),BinaryOp(/,ArrayCell(Id(a),[IntLit(2)]),BinaryOp(*,IntLit(5),IntLit(6)))))]))])])"
+            self.assertTrue(TestAST.test(input, expect, 367))
+
+    def test_simple_program68(self):
+        input = """
+          Class Lit{
+        main(){
+        Val A: String;
+        A="He asked me: '"Where is John?'"";}}
+            """
+        expect = str(Program([ClassDecl(Id("Lit"), [MethodDecl(Instance(), Id("main"), [], Block([ConstDecl(
+            Id("A"), StringType()), Assign(Id("A"), StringLiteral("He asked me: '\"Where is John?'\""))]))])]))
+        self.assertTrue(TestAST.test(input, expect, 368))
+
+    def test_simple_program69(self):
+        input = """
+          Class Lit{
+        main(){
+        Val A: String;
+        A="^^ Huynh Thi Truong DUng^^";}}
+            """
+        expect = str(Program([ClassDecl(Id("Lit"), [MethodDecl(Instance(), Id("main"), [], Block([ConstDecl(
+            Id("A"), StringType()), Assign(Id("A"), StringLiteral("^^ Huynh Thi Truong DUng^^"))]))])]))
+        self.assertTrue(TestAST.test(input, expect, 369))
+
+    def test_simple_program70(self):
+        input = """
+          Class Lit{
+        main(){
+        Val A: String;
+        A= "a\\tb\\f\\b%33\\r\\'hello";}}
+            """
+        expect = str(Program([ClassDecl(Id("Lit"), [MethodDecl(Instance(), Id("main"), [], Block([ConstDecl(
+            Id("A"), StringType()), Assign(Id("A"), StringLiteral("a\\tb\\f\\b%33\\r\\'hello"))]))])]))
+        self.assertTrue(TestAST.test(input, expect, 370))
+
+    def test_simple_program71(self):
+        input = """
+         Class Lit{
+        main(){
+        Val A: Array[String, 1] = Array("adsklf");
+        A=Array("\\t\\b\\f");}}
+            """
+        expect = str(Program([ClassDecl(Id("Lit"), [MethodDecl(Instance(), Id("main"), [], Block([ConstDecl(
+            Id("A"), ArrayType(1, StringType()), ArrayLiteral([StringLiteral("adsklf")])), Assign(Id("A"), ArrayLiteral([StringLiteral("\\t\\b\\f")]))]))])]))
+        self.assertTrue(TestAST.test(input, expect, 371))

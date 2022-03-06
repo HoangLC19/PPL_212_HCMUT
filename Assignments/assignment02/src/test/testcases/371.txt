@@ -1,0 +1,6 @@
+
+         Class Lit{
+        main(){
+        Val A: Array[String, 1] = Array("adsklf");
+        A=Array("\t\b\f");}}
+            

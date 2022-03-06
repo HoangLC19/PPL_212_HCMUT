@@ -1,0 +1,4 @@
+
+            Class A{Var b: Int;}
+        Class B: A{ Val d: Int = 324234;}
+            

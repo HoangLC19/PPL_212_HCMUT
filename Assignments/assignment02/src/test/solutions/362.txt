@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(School),[AttributeDecl(Static,ConstDecl(Id($longitude),IntType,None)),AttributeDecl(Static,ConstDecl(Id($latitude),IntType,None))])])

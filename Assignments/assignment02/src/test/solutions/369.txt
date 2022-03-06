@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(Lit),[MethodDecl(Id(main),Instance,[],Block([ConstDecl(Id(A),StringType,None),AssignStmt(Id(A),StringLit(^^ Huynh Thi Truong DUng^^))]))])])

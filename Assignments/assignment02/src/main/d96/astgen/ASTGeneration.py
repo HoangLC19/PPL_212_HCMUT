@@ -201,7 +201,7 @@ class ASTGeneration(D96Visitor):
     def visitExp10(self, ctx: D96Parser.Exp10Context):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp11())
-        return NewExpr(Id(ctx.ID().getText()), self.visit(exp_list) if ctx.exp_list() else [])
+        return NewExpr(Id(ctx.ID().getText()), self.visit(ctx.exp_list()) if ctx.exp_list() else [])
 
     def visitExp11(self, ctx: D96Parser.Exp11Context):
         if ctx.getChildCount() == 1:

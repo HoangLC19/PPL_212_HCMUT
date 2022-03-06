@@ -1,0 +1,6 @@
+
+          Class Lit{
+        main(){
+        Val A: String;
+        A="He asked me: '"Where is John?'"";}}
+            

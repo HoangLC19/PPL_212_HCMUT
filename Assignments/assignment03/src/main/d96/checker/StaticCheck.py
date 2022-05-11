@@ -4,7 +4,7 @@
 """
 from AST import *
 from Visitor import *
-from Utils import Utils
+# from Utils import Utils
 from StaticError import *
 
 
@@ -21,7 +21,7 @@ class Symbol:
         self.value = value
 
 
-class StaticChecker(BaseVisitor, Utils):
+class StaticChecker(BaseVisitor):
 
     global_envi = [
         Symbol("getInt", MType([], IntType())),
@@ -34,27 +34,71 @@ class StaticChecker(BaseVisitor, Utils):
     def check(self):
         return self.visit(self.ast, StaticChecker.global_envi)
 
+    def infer(self, name, typ, c):
+        scope = next(iter(filter(lambda scope: name in scope, c)))
+        scope[name] = typ
+
     # decl: List[ClassDecl]
     def visitProgram(self, ast, c):
-        c = [{}]  # list of scopes
+        c = [{}]  # list of scope
         for decl in ast.decl:
             self.visit(decl, c)
 
     # classname: Id, memlist: List[MemDecl], parentname: Id = None
-    def visitClassDecl(self, ast, c):
-        pass
 
+    def visitClassDecl(self, ast, c):
+        # check class redeclared
+        if ast.classname.name in c[0]:
+            raise Redeclared(Class(), ast.classname.name)
+
+        c[0][ast.classname.name] = 0
+        env = [{}] + c
+        for decl in ast.memlist:
+            self.visit(decl, env)
+
+    # kind: SIking, decl: StoreDecl
     def visitAttributeDecl(self, ast, c):
-        pass
+        # check attribute redeclared
+        name = ast.decl.variable.name if ast.decl.variable else ast.decl.constant.name
+        typ = self.visit(ast.decl.varType, c) if ast.decl.variable else self.visit(
+            ast.decl.constType, c)
+        if name in c[0]:
+            raise Redeclared(Attribute(), name)
+
+        c[0][name] = typ
+
+    # variable: Id, varType: Type, varInit: Expr = None
 
     def visitVarDecl(self, ast, c):
-        pass
+        # check variable redeclared
+        if ast.variable.name in c[0]:
+            raise Redeclared(Variable(), ast.variable.name)
+
+        c[0][ast.variable.name] = self.visit(ast.varType, c)
 
     def visitConstDecl(self, ast, c):
-        pass
+        # check constant redeclared
+        if ast.constant.name in c[0]:
+            raise Redeclared(Constant(), ast.constant.name)
 
+        c[0][ast.constant.name] = self.visit(ast.constType, c)
+
+    # kind: SIKind, name: Id, param: List[VarDecl], body: Block
     def visitMethodDecl(self, ast, c):
-        pass
+        # check method redeclared
+        if ast.name.name in c[0]:
+            raise Redeclared(Method(), ast.name.name)
+
+        env = [{}] + c
+
+        # check parameter redeclared
+        for param in ast.param:
+            if param.variable.name in env[0]:
+                raise Redeclared(Parameter(), param.variable.name)
+            env[0][param.variable.name] = self.visit(param.varType, env)
+
+        c[0][ast.name.name] = env[0]
+        self.visit(ast.body, env)
 
     def visitInstance(self, ast, c):
         pass
@@ -64,7 +108,44 @@ class StaticChecker(BaseVisitor, Utils):
 
     # Expression
     def visitBinaryOp(self, ast, c):
-        pass
+        left = self.visit(ast.left, c)
+        right = self.visit(ast.right, c)
+
+        if ast.op in ['+', '-', '*', '/']:
+            if (type(left) is IntType or type(left) is FloatType) and type(right) is NoneType:
+                right = left
+                self.infer(ast.right.name, left, c)
+                return left
+
+            elif (type(right) is IntType or type(right) is FloatType) and type(left) is NoneType:
+                left = right
+                self.infer(ast.left.name, right, c)
+                return right
+
+            elif type(left) is IntType and type(right) is FloatType:
+                left = right
+                return FloatType()
+
+            elif type(right) is IntType and type(left) is FloatType:
+                right = left
+                return FloatType()
+
+            elif type(left) is not type(right):
+                raise TypeMismatchInExpression(ast)
+
+        elif ast.op == '%':
+            if type(left) is IntType and type(right) is NoneType:
+                right = left
+                self.infer(ast.right.name, left, c)
+
+            elif type(right) is IntType and type(left) is NoneType:
+                left = right
+                self.infer(ast.left.name, right, c)
+
+            elif type(left) is not IntType or type(right) is not IntType:
+                raise TypeMismatchInExpression(ast)
+
+            return IntType()
 
     def visitUnaryOp(self, ast, c):
         pass
@@ -77,7 +158,8 @@ class StaticChecker(BaseVisitor, Utils):
 
     # stmt
     def visitBlock(self, ast, c):
-        pass
+        for inst in ast.inst:
+            self.visit(inst, c)
 
     def visitCallStmt(self, ast, c):
         pass
@@ -106,7 +188,7 @@ class StaticChecker(BaseVisitor, Utils):
         return ClassType()
 
     def visitNullLiteral(self, ast, c):
-        return NullType()
+        return NoneType()
 
     def visitBooleanLiteral(self, ast, c):
         return BoolType()
